@@ -1,5 +1,7 @@
-// start slingin' some d3 here.
-
+// Declare global variables
+var highScore,
+    currentScore,
+    numberOfCollisions;
 
 // create a gameboard
 var board = d3.select('.game-board')
@@ -50,20 +52,36 @@ for (var i =0 ; i< enemies.length; i ++){
 
 // drag the hero!
 var drag = d3.behavior.drag().on('drag', function() {
-  hero.attr('x', d3.event.x)
-      .attr('y', d3.event.y);
+  hero.attr('cx', d3.event.x)
+      .attr('cy', d3.event.y);
 });
 
 
-var hero = board.append('image')
-  .attr('xlink:href', 'logo-hr-small.png') 
-  .attr('x',75)
-  .attr('y',250)
-  .attr('height', 100)
-  .attr('width', 100)
+// var defs = board.append('svg:defs')
+//   .append('svg:pattern')
+//   .classed('hero', true)
+//   .attr('patternUnits', 'userSpaceOnUse')
+//   .attr('height', 100)
+//   .attr('width', 100)
+//   .append('svg:image')
+//   .attr('xlink:href', 'logo-hr-small.png') 
+//   .attr('x',75)
+//   .attr('y',250)
+//   .attr('height', 100)
+//   .attr('width', 100)
+  
+  
+var hero = board.append('circle')
+  .attr('cx', 50)
+  .attr('cy', 50)
+  .attr('r', 50)
   .call(drag);
 
-
+board.selectAll('circle')
+  .append('image')
+  .attr('xlink:href', 'logo-hr-small.png')
+  .attr('height', 25)
+  .attr('width', 25);
 
 
 
@@ -76,8 +94,20 @@ var enemyMove = function() {
   .attr('y', function() {return Math.random() * 500;})
 };
 
+var detectCollisions = function(enemy) {
+  d3.select('.collisions span')
+    .text(numberOfCollisions);
+  // calculate distance between hero and enemy
+  // if distance < XX
+    // collision!
+    // collision count increment
+};
+
+//detectCollisions();
+
+
 // sets enemies to move every 1000 ms
-setInterval(enemyMove, 1000); 
+//setInterval(enemyMove, 1000); 
 
 
 
